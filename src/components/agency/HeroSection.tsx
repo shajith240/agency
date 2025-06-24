@@ -30,7 +30,6 @@ export function HeroSection() {
         <CursorSpotlight
           className="z-[2] performance-optimized"
           size={400}
-          springOptions={{ bounce: 0, damping: 20, stiffness: 120 }}
         />
 
         <div className="flex h-full">

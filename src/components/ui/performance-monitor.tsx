@@ -19,7 +19,7 @@ export function PerformanceMonitor({ enabled = false }: { enabled?: boolean }) {
 
   const frameCountRef = useRef(0);
   const lastTimeRef = useRef(performance.now());
-  const animationFrameRef = useRef<number>();
+  const animationFrameRef = useRef<number>(0);
 
   useEffect(() => {
     if (!enabled) return;

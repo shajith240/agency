@@ -39,7 +39,7 @@ export function PerformanceTest({ enabled = false }: { enabled?: boolean }) {
   const [results, setResults] = useState<TestResults | null>(null);
   
   const metricsRef = useRef<PerformanceMetrics[]>([]);
-  const observerRef = useRef<PerformanceObserver>();
+  const observerRef = useRef<PerformanceObserver | null>(null);
 
   // Prevent hydration mismatch by only rendering on client
   useEffect(() => {
@@ -57,10 +57,10 @@ export function PerformanceTest({ enabled = false }: { enabled?: boolean }) {
             console.log(`${entry.name}: ${entry.duration}ms`);
           }
           
-          if (entry.entryType === 'layout-shift' && !entry.hadRecentInput) {
+          if (entry.entryType === 'layout-shift' && !(entry as unknown as { hadRecentInput?: boolean }).hadRecentInput) {
             setMetrics(prev => ({
               ...prev,
-              layoutShifts: prev.layoutShifts + entry.value
+              layoutShifts: prev.layoutShifts + (entry as unknown as { value: number }).value
             }));
           }
           

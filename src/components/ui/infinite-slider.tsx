@@ -32,6 +32,7 @@ export function InfiniteSlider({
   const [key, setKey] = useState(0);
   const animationRef = useRef<ReturnType<typeof animate> | null>(null);
   const isVisibleRef = useRef(true);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   // Adjust duration based on performance settings
   const optimizedDuration = animationSettings.enableAnimations
@@ -50,8 +51,8 @@ export function InfiniteSlider({
       intersectionSettings
     );
 
-    if (ref.current) {
-      observer.observe(ref.current);
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
     }
 
     return () => observer.disconnect();
@@ -116,7 +117,7 @@ export function InfiniteSlider({
     : {};
 
   return (
-    <div className={cn('overflow-hidden', className)}>
+    <div className={cn('overflow-hidden', className)} ref={containerRef}>
       <motion.div
         className='flex w-max will-change-transform'
         style={{

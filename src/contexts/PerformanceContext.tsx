@@ -24,7 +24,7 @@ export function PerformanceProvider({ children }: { children: React.ReactNode })
   
   const frameCountRef = useRef(0);
   const lastTimeRef = useRef(performance.now());
-  const animationFrameRef = useRef<number>();
+  const animationFrameRef = useRef<number>(0);
   const fpsHistoryRef = useRef<number[]>([]);
 
   // FPS monitoring
@@ -202,7 +202,7 @@ export function useAdaptiveIntersectionObserver(
   deps: React.DependencyList = []
 ) {
   const { intersectionSettings } = usePerformance();
-  const observerRef = useRef<IntersectionObserver>();
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
     observerRef.current = new IntersectionObserver(callback, intersectionSettings);
