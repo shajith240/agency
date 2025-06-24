@@ -1,0 +1,288 @@
+{
+  "name": "E-commerce Shopping Assistant",
+  "description": "AI-powered shopping assistant that helps customers find products and guides purchase decisions",
+  "version": "1.0.0",
+  "author": "SharpFlow",
+  "category": "chatbots",
+  "tags": ["ecommerce", "shopping", "recommendations", "shopify", "free"],
+  "requirements": {
+    "n8n_version": ">=1.0.0",
+    "nodes": [
+      "n8n-nodes-base.webhook",
+      "n8n-nodes-base.openai",
+      "n8n-nodes-base.shopify",
+      "n8n-nodes-base.http-request",
+      "n8n-nodes-base.if",
+      "n8n-nodes-base.set",
+      "n8n-nodes-base.function"
+    ],
+    "credentials": [
+      "openAiApi",
+      "shopifyApi"
+    ]
+  },
+  "workflow": {
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "shopping-assistant",
+          "responseMode": "responseNode"
+        },
+        "id": "webhook-node",
+        "name": "Customer Message",
+        "type": "n8n-nodes-base.webhook",
+        "position": [240, 300]
+      },
+      {
+        "parameters": {
+          "jsCode": "// Extract intent from customer message\nconst message = $input.item.json.message.toLowerCase();\nconst customerId = $input.item.json.customer_id;\n\n// Determine customer intent\nlet intent = 'general';\nif (message.includes('find') || message.includes('looking for') || message.includes('search')) {\n  intent = 'product_search';\n} else if (message.includes('recommend') || message.includes('suggest')) {\n  intent = 'recommendation';\n} else if (message.includes('order') || message.includes('purchase') || message.includes('buy')) {\n  intent = 'order_inquiry';\n} else if (message.includes('size') || message.includes('color') || message.includes('availability')) {\n  intent = 'product_details';\n}\n\nreturn {\n  message: $input.item.json.message,\n  customer_id: customerId,\n  intent: intent,\n  timestamp: new Date().toISOString()\n};"
+        },
+        "id": "intent-analysis",
+        "name": "Analyze Intent",
+        "type": "n8n-nodes-base.function",
+        "position": [460, 300]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "conditions": [
+              {
+                "leftValue": "={{ $json.intent }}",
+                "rightValue": "product_search",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                }
+              }
+            ]
+          }
+        },
+        "id": "intent-router",
+        "name": "Route by Intent",
+        "type": "n8n-nodes-base.if",
+        "position": [680, 300]
+      },
+      {
+        "parameters": {
+          "resource": "product",
+          "operation": "getAll",
+          "returnAll": false,
+          "limit": 10,
+          "filters": {
+            "title": "={{ $('Analyze Intent').item.json.message }}"
+          }
+        },
+        "id": "search-products",
+        "name": "Search Products",
+        "type": "n8n-nodes-base.shopify",
+        "position": [900, 200]
+      },
+      {
+        "parameters": {
+          "model": "gpt-4",
+          "messages": {
+            "messageValues": [
+              {
+                "role": "system",
+                "message": "You are a helpful shopping assistant. Based on the customer's message and available products, provide personalized recommendations. Be friendly and helpful."
+              },
+              {
+                "role": "user",
+                "message": "Customer said: {{ $('Analyze Intent').item.json.message }}\\n\\nAvailable products: {{ JSON.stringify($('Search Products').item.json) }}\\n\\nProvide helpful recommendations."
+              }
+            ]
+          },
+          "options": {
+            "temperature": 0.7,
+            "maxTokens": 300
+          }
+        },
+        "id": "generate-recommendation",
+        "name": "Generate Recommendation",
+        "type": "n8n-nodes-base.openai",
+        "position": [1120, 200]
+      },
+      {
+        "parameters": {
+          "model": "gpt-4",
+          "messages": {
+            "messageValues": [
+              {
+                "role": "system",
+                "message": "You are a friendly shopping assistant. Help customers with their general inquiries about shopping, returns, shipping, etc."
+              },
+              {
+                "role": "user",
+                "message": "={{ $('Analyze Intent').item.json.message }}"
+              }
+            ]
+          },
+          "options": {
+            "temperature": 0.5,
+            "maxTokens": 200
+          }
+        },
+        "id": "general-response",
+        "name": "General Response",
+        "type": "n8n-nodes-base.openai",
+        "position": [900, 400]
+      },
+      {
+        "parameters": {
+          "values": {
+            "string": [
+              {
+                "name": "response",
+                "value": "={{ $json.choices ? $json.choices[0].message.content : $json.message }}"
+              },
+              {
+                "name": "intent",
+                "value": "={{ $('Analyze Intent').item.json.intent }}"
+              },
+              {
+                "name": "customer_id",
+                "value": "={{ $('Analyze Intent').item.json.customer_id }}"
+              }
+            ]
+          }
+        },
+        "id": "format-response",
+        "name": "Format Response",
+        "type": "n8n-nodes-base.set",
+        "position": [1340, 300]
+      },
+      {
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={{ $json }}"
+        },
+        "id": "send-response",
+        "name": "Send Response",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "position": [1560, 300]
+      }
+    ],
+    "connections": {
+      "Customer Message": {
+        "main": [
+          [
+            {
+              "node": "Analyze Intent",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Analyze Intent": {
+        "main": [
+          [
+            {
+              "node": "Route by Intent",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Route by Intent": {
+        "main": [
+          [
+            {
+              "node": "Search Products",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "General Response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Search Products": {
+        "main": [
+          [
+            {
+              "node": "Generate Recommendation",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Generate Recommendation": {
+        "main": [
+          [
+            {
+              "node": "Format Response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "General Response": {
+        "main": [
+          [
+            {
+              "node": "Format Response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Format Response": {
+        "main": [
+          [
+            {
+              "node": "Send Response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    }
+  },
+  "setup_instructions": {
+    "steps": [
+      {
+        "step": 1,
+        "title": "Import Workflow",
+        "description": "Import this JSON file into your n8n instance"
+      },
+      {
+        "step": 2,
+        "title": "Configure Shopify",
+        "description": "Set up Shopify API credentials for product access"
+      },
+      {
+        "step": 3,
+        "title": "Configure OpenAI",
+        "description": "Add your OpenAI API key for AI responses"
+      },
+      {
+        "step": 4,
+        "title": "Test Integration",
+        "description": "Test with sample customer messages"
+      },
+      {
+        "step": 5,
+        "title": "Customize Responses",
+        "description": "Adjust AI personality and product recommendations"
+      }
+    ]
+  },
+  "customization_options": {
+    "product_filters": "Customize product search and filtering logic",
+    "recommendation_logic": "Modify AI recommendation algorithms",
+    "response_style": "Adjust assistant personality and tone",
+    "integration_options": "Add support for other e-commerce platforms"
+  }
+}

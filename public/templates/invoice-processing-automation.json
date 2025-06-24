@@ -1,0 +1,359 @@
+{
+  "name": "Invoice Processing Automation",
+  "description": "Complete invoice processing workflow with OCR, data extraction, and accounting system integration",
+  "version": "1.0.0",
+  "author": "SharpFlow",
+  "category": "workflow-automation",
+  "tags": ["accounting", "ocr", "pdf", "quickbooks", "xero", "enterprise"],
+  "requirements": {
+    "n8n_version": ">=1.0.0",
+    "nodes": [
+      "n8n-nodes-base.webhook",
+      "n8n-nodes-base.http-request",
+      "n8n-nodes-base.function",
+      "n8n-nodes-base.if",
+      "n8n-nodes-base.set",
+      "n8n-nodes-base.quickbooks",
+      "n8n-nodes-base.gmail"
+    ],
+    "credentials": [
+      "quickBooksOAuth2Api",
+      "gmailOAuth2",
+      "ocrSpaceApi"
+    ]
+  },
+  "workflow": {
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "process-invoice",
+          "responseMode": "responseNode",
+          "options": {
+            "rawBody": true
+          }
+        },
+        "id": "invoice-webhook",
+        "name": "Invoice Upload",
+        "type": "n8n-nodes-base.webhook",
+        "position": [240, 300]
+      },
+      {
+        "parameters": {
+          "url": "https://api.ocr.space/parse/image",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "ocrSpaceApi",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Content-Type",
+                "value": "multipart/form-data"
+              }
+            ]
+          },
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "base64Image",
+                "value": "={{ $json.file_data }}"
+              },
+              {
+                "name": "language",
+                "value": "eng"
+              },
+              {
+                "name": "isOverlayRequired",
+                "value": "true"
+              }
+            ]
+          }
+        },
+        "id": "ocr-extraction",
+        "name": "Extract Text with OCR",
+        "type": "n8n-nodes-base.httpRequest",
+        "position": [460, 300]
+      },
+      {
+        "parameters": {
+          "jsCode": "// Parse OCR results and extract invoice data\nconst ocrResult = $input.item.json;\nconst extractedText = ocrResult.ParsedResults[0].ParsedText;\n\n// Regular expressions for common invoice fields\nconst patterns = {\n  invoiceNumber: /(?:invoice|inv)\\s*#?\\s*:?\\s*([A-Z0-9-]+)/i,\n  date: /(?:date|dated)\\s*:?\\s*(\\d{1,2}[/-]\\d{1,2}[/-]\\d{2,4})/i,\n  total: /(?:total|amount)\\s*:?\\s*\\$?([0-9,]+\\.?\\d{0,2})/i,\n  vendor: /(?:from|vendor|company)\\s*:?\\s*([A-Za-z\\s&.,]+)/i,\n  dueDate: /(?:due|payment due)\\s*:?\\s*(\\d{1,2}[/-]\\d{1,2}[/-]\\d{2,4})/i\n};\n\n// Extract data using patterns\nconst extractedData = {};\nfor (const [field, pattern] of Object.entries(patterns)) {\n  const match = extractedText.match(pattern);\n  extractedData[field] = match ? match[1].trim() : null;\n}\n\n// Clean up total amount\nif (extractedData.total) {\n  extractedData.total = parseFloat(extractedData.total.replace(/,/g, ''));\n}\n\nreturn {\n  ...extractedData,\n  rawText: extractedText,\n  confidence: ocrResult.ParsedResults[0].TextOverlay ? 'high' : 'medium',\n  processingDate: new Date().toISOString()\n};"
+        },
+        "id": "parse-invoice-data",
+        "name": "Parse Invoice Data",
+        "type": "n8n-nodes-base.function",
+        "position": [680, 300]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "conditions": [
+              {
+                "leftValue": "={{ $json.invoiceNumber }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "isNotEmpty"
+                }
+              },
+              {
+                "leftValue": "={{ $json.total }}",
+                "rightValue": 0,
+                "operator": {
+                  "type": "number",
+                  "operation": "gt"
+                }
+              }
+            ],
+            "combinator": "and"
+          }
+        },
+        "id": "validation-check",
+        "name": "Validate Data",
+        "type": "n8n-nodes-base.if",
+        "position": [900, 300]
+      },
+      {
+        "parameters": {
+          "resource": "bill",
+          "operation": "create",
+          "vendorRef": "={{ $json.vendor }}",
+          "line": {
+            "lineUi": {
+              "lineValues": [
+                {
+                  "amount": "={{ $json.total }}",
+                  "detailType": "AccountBasedExpenseLineDetail",
+                  "accountBasedExpenseLineDetail": {
+                    "accountRef": "60"
+                  }
+                }
+              ]
+            }
+          },
+          "additionalFields": {
+            "docNumber": "={{ $json.invoiceNumber }}",
+            "txnDate": "={{ $json.date }}",
+            "dueDate": "={{ $json.dueDate }}"
+          }
+        },
+        "id": "create-quickbooks-bill",
+        "name": "Create QuickBooks Bill",
+        "type": "n8n-nodes-base.quickbooks",
+        "position": [1120, 200]
+      },
+      {
+        "parameters": {
+          "operation": "send",
+          "to": "accounting@company.com",
+          "subject": "Invoice Processing Failed - Manual Review Required",
+          "message": "An invoice could not be processed automatically. Please review the attached document.\\n\\nExtracted data:\\n{{ JSON.stringify($('Parse Invoice Data').item.json, null, 2) }}",
+          "attachments": "={{ $('Invoice Upload').item.json.filename }}"
+        },
+        "id": "send-error-email",
+        "name": "Send Error Notification",
+        "type": "n8n-nodes-base.gmail",
+        "position": [1120, 400]
+      },
+      {
+        "parameters": {
+          "values": {
+            "string": [
+              {
+                "name": "status",
+                "value": "={{ $('Create QuickBooks Bill').item.json ? 'success' : 'failed' }}"
+              },
+              {
+                "name": "invoice_number",
+                "value": "={{ $('Parse Invoice Data').item.json.invoiceNumber }}"
+              },
+              {
+                "name": "amount",
+                "value": "={{ $('Parse Invoice Data').item.json.total }}"
+              },
+              {
+                "name": "quickbooks_id",
+                "value": "={{ $('Create QuickBooks Bill').item.json.Bill.Id }}"
+              }
+            ]
+          }
+        },
+        "id": "format-success-response",
+        "name": "Format Success Response",
+        "type": "n8n-nodes-base.set",
+        "position": [1340, 200]
+      },
+      {
+        "parameters": {
+          "values": {
+            "string": [
+              {
+                "name": "status",
+                "value": "validation_failed"
+              },
+              {
+                "name": "message",
+                "value": "Invoice data could not be validated. Manual review required."
+              },
+              {
+                "name": "extracted_data",
+                "value": "={{ JSON.stringify($('Parse Invoice Data').item.json) }}"
+              }
+            ]
+          }
+        },
+        "id": "format-error-response",
+        "name": "Format Error Response",
+        "type": "n8n-nodes-base.set",
+        "position": [1340, 400]
+      },
+      {
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={{ $json }}"
+        },
+        "id": "send-response",
+        "name": "Send Response",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "position": [1560, 300]
+      }
+    ],
+    "connections": {
+      "Invoice Upload": {
+        "main": [
+          [
+            {
+              "node": "Extract Text with OCR",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Extract Text with OCR": {
+        "main": [
+          [
+            {
+              "node": "Parse Invoice Data",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Parse Invoice Data": {
+        "main": [
+          [
+            {
+              "node": "Validate Data",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Validate Data": {
+        "main": [
+          [
+            {
+              "node": "Create QuickBooks Bill",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Send Error Notification",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create QuickBooks Bill": {
+        "main": [
+          [
+            {
+              "node": "Format Success Response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Send Error Notification": {
+        "main": [
+          [
+            {
+              "node": "Format Error Response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Format Success Response": {
+        "main": [
+          [
+            {
+              "node": "Send Response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Format Error Response": {
+        "main": [
+          [
+            {
+              "node": "Send Response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    }
+  },
+  "setup_instructions": {
+    "steps": [
+      {
+        "step": 1,
+        "title": "Import Workflow",
+        "description": "Import this JSON file into your n8n instance"
+      },
+      {
+        "step": 2,
+        "title": "Configure OCR Service",
+        "description": "Set up OCR.space API credentials for text extraction"
+      },
+      {
+        "step": 3,
+        "title": "Configure QuickBooks",
+        "description": "Set up QuickBooks Online API credentials"
+      },
+      {
+        "step": 4,
+        "title": "Configure Email",
+        "description": "Set up Gmail or SMTP credentials for notifications"
+      },
+      {
+        "step": 5,
+        "title": "Test Processing",
+        "description": "Test with sample invoice PDFs"
+      },
+      {
+        "step": 6,
+        "title": "Customize Parsing",
+        "description": "Adjust regex patterns for your invoice formats"
+      }
+    ]
+  },
+  "customization_options": {
+    "ocr_service": "Can be switched to Google Vision API or AWS Textract",
+    "accounting_system": "Supports QuickBooks, Xero, and other accounting platforms",
+    "data_extraction": "Customize regex patterns for different invoice formats",
+    "validation_rules": "Add custom validation logic for your business rules"
+  }
+}

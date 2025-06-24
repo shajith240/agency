@@ -1,26 +1,581 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }
 
+/* Optimized Spline loader animation with GPU acceleration */
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 3px solid #FFF;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Optimized slow spin animation with GPU acceleration */
+@keyframes spin-slow {
+  from {
+    transform: rotate3d(0, 0, 1, 0deg);
+  }
+  to {
+    transform: rotate3d(0, 0, 1, 360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+  will-change: transform;
+  transform-origin: center center;
+  backface-visibility: hidden;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate3d(0, 0, 1, 0deg);
+  }
+  100% {
+    transform: rotate3d(0, 0, 1, 360deg);
+  }
+}
+
+/* Optimized spotlight animation with GPU acceleration */
+@keyframes spotlight {
+  0% {
+    opacity: 0;
+    transform: translate3d(-72%, -62%, 0) scale3d(0.5, 0.5, 1);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(-50%, -40%, 0) scale3d(1, 1, 1);
+  }
+}
+
+.animate-spotlight {
+  animation: spotlight 2s ease .75s 1 forwards;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+/* Expanded 3D Scene container to prevent robot animation cropping */
+.spline-scene-container {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  perspective: 1400px;
+  overflow: visible;
+  position: relative;
+  z-index: 1;
+  contain: layout style;
+  isolation: isolate;
+}
+
+.spline-scene-enhanced {
+  transform-origin: center center;
+  transition: transform 0.2s ease-out;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.spline-scene-enhanced:hover {
+  will-change: transform;
+}
+
+.spline-scene-enhanced:hover {
+  transform: scale3d(1.01, 1.01, 1);
+}
+
+/* Dramatically reduced robot scaling for optimal visual balance and hierarchy */
+@media (max-width: 768px) {
+  .spline-mobile-scale {
+    transform: scale3d(0.25, 0.25, 1) translate3d(0, 20%, 0);
+    transform-origin: center top;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .spline-tablet-scale {
+    transform: scale3d(0.3, 0.3, 1) translate3d(0, 18%, 0);
+    transform-origin: center top;
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+  .spline-desktop-scale {
+    transform: scale3d(0.35, 0.35, 1) translate3d(0, 15%, 0);
+    transform-origin: center top;
+  }
+}
+
+@media (min-width: 1441px) {
+  .spline-xl-scale {
+    transform: scale3d(0.4, 0.4, 1) translate3d(0, 12%, 0);
+    transform-origin: center top;
+  }
+}
+
+/* Radial gradient utility */
+.bg-radial-gradient {
+  background: radial-gradient(circle at center, var(--tw-gradient-stops));
+}
+
+/* ===== ENHANCED VISUAL DEPTH UTILITIES ===== */
+
+/* Brand-colored ambient gradient overlays */
+.ambient-gradient-overlay {
+  background: radial-gradient(
+    ellipse 120% 80% at 50% 0%,
+    rgba(251, 191, 36, 0.08) 0%,
+    rgba(249, 115, 22, 0.06) 25%,
+    rgba(239, 68, 68, 0.04) 50%,
+    transparent 70%
+  );
+}
+
+.ambient-gradient-overlay-bottom {
+  background: radial-gradient(
+    ellipse 120% 80% at 50% 100%,
+    rgba(251, 191, 36, 0.06) 0%,
+    rgba(249, 115, 22, 0.04) 25%,
+    rgba(239, 68, 68, 0.03) 50%,
+    transparent 70%
+  );
+}
+
+.ambient-gradient-overlay-center {
+  background: radial-gradient(
+    ellipse 150% 100% at 50% 50%,
+    rgba(251, 191, 36, 0.05) 0%,
+    rgba(249, 115, 22, 0.04) 30%,
+    rgba(239, 68, 68, 0.03) 60%,
+    transparent 80%
+  );
+}
+
+/* Subtle section background gradients */
+.section-gradient-bg {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.98) 0%,
+    rgba(15, 15, 15, 0.96) 25%,
+    rgba(0, 0, 0, 0.98) 50%,
+    rgba(10, 10, 10, 0.97) 75%,
+    rgba(0, 0, 0, 0.98) 100%
+  );
+}
+
+/* Enhanced backdrop blur with selective performance optimization */
+.enhanced-backdrop-blur {
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+}
+
+.enhanced-backdrop-blur:hover,
+.enhanced-backdrop-blur.active {
+  will-change: backdrop-filter;
+}
+
+.enhanced-backdrop-blur-sm {
+  backdrop-filter: blur(8px) saturate(150%);
+  -webkit-backdrop-filter: blur(8px) saturate(150%);
+}
+
+.enhanced-backdrop-blur-lg {
+  backdrop-filter: blur(16px) saturate(200%);
+  -webkit-backdrop-filter: blur(16px) saturate(200%);
+}
+
+/* Glow effects for interactive elements */
+.brand-glow-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.brand-glow-hover:hover {
+  box-shadow:
+    0 0 20px rgba(251, 191, 36, 0.15),
+    0 0 40px rgba(249, 115, 22, 0.1),
+    0 0 60px rgba(239, 68, 68, 0.05);
+}
+
+/* Subtle border glow */
+.border-glow {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 0 10px rgba(251, 191, 36, 0.05);
+}
+
+.border-glow-hover:hover {
+  border-color: rgba(251, 191, 36, 0.3);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 0 20px rgba(251, 191, 36, 0.1),
+    0 0 40px rgba(249, 115, 22, 0.05);
+}
+
+/* Hero section specific lighting */
+.hero-ambient-lighting {
+  background:
+    radial-gradient(ellipse 100% 60% at 20% 50%, rgba(251, 191, 36, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse 80% 50% at 80% 30%, rgba(249, 115, 22, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 40% at 50% 70%, rgba(239, 68, 68, 0.04) 0%, transparent 50%);
+}
+
+/* Card enhancement gradients */
+.card-ambient-glow {
+  background:
+    linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(15, 15, 15, 0.92) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.card-ambient-glow:hover {
+  border-color: rgba(251, 191, 36, 0.2);
+  box-shadow:
+    0 8px 40px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(251, 191, 36, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Navigation enhancement */
+.nav-ambient-blur {
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Stats section lighting */
+.stats-ambient-lighting {
+  background:
+    radial-gradient(ellipse 150% 100% at 30% 0%, rgba(251, 191, 36, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 120% 80% at 70% 100%, rgba(249, 115, 22, 0.04) 0%, transparent 60%);
+}
+
+/* Footer gradient enhancement */
+.footer-ambient-gradient {
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.95) 0%, rgba(5, 5, 5, 0.98) 50%, rgba(0, 0, 0, 1) 100%),
+    radial-gradient(ellipse 100% 50% at 50% 0%, rgba(251, 191, 36, 0.04) 0%, transparent 70%);
+}
+
+/* Enhanced 3D scene performance */
+.spline-scene-container canvas {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Expanded 3D container adjustments with layout protection - consolidated */
+/* Note: Main .spline-scene-enhanced rules are defined above */
+
+/* Performance optimizations for animations - selective will-change */
+.performance-optimized {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.performance-optimized:hover,
+.performance-optimized.animating {
+  will-change: transform;
+}
+
+.performance-optimized:not(:hover):not(.animating) {
+  will-change: auto;
+}
+
+/* Optimized gradient effects */
+.gradient-optimized {
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  will-change: auto;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Prevent horizontal scrolling from expanded 3D containers */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Hero section specific overflow handling for significantly expanded robot animation */
+.hero-section-container {
+  overflow-x: hidden;
+  position: relative;
+  contain: layout;
+}
+
+/* Ensure text content remains protected and accessible */
+.hero-text-content {
+  position: relative;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+/* Enhanced container isolation for significantly expanded robot animation scenes */
+@media (min-width: 1024px) {
+  .spline-scene-container {
+    contain: layout style;
+  }
+}
+
+/* Ensure proper clipping for massively expanded containers while maintaining full robot animation visibility */
+.spline-scene-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Additional overflow protection for expanded robot containers */
+.spline-scene-container {
+  clip-path: inset(0);
+}
+
+/* Ensure grid layout stability with expanded robot containers */
+@media (min-width: 1024px) {
+  .hero-section-container .grid {
+    overflow: hidden;
+  }
+}
+
+/* Vertical positioning optimized for significantly reduced robot scale */
+.spline-scene-enhanced {
+  position: relative;
+  padding-top: 0.25rem;
+}
+
+/* Responsive vertical positioning for smaller robot scale */
+@media (max-width: 768px) {
+  .spline-scene-enhanced {
+    padding-top: 0.5rem;
+    margin-top: 0.125rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .spline-scene-enhanced {
+    padding-top: 0.75rem;
+    margin-top: 0.25rem;
+  }
+}
+
+@media (min-width: 1025px) {
+  .spline-scene-enhanced {
+    padding-top: 1rem;
+    margin-top: 0.375rem;
+  }
+}
+
+@media (min-width: 1441px) {
+  .spline-scene-enhanced {
+    padding-top: 1.25rem;
+    margin-top: 0.5rem;
+  }
+}
+
+/* Enhanced overflow protection for massively expanded containers */
+.hero-section-container {
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Ensure text content remains fully accessible and protected */
+.hero-text-content {
+  position: relative;
+  z-index: 20;
+  pointer-events: auto;
+  isolation: isolate;
+}
+
+/* Viewport height adjustments for consistent robot positioning */
+@media (max-height: 600px) {
+  .spline-scene-enhanced {
+    padding-top: 0.5rem;
+    margin-top: 0.25rem;
+  }
+}
+
+@media (min-height: 601px) and (max-height: 800px) {
+  .spline-scene-enhanced {
+    padding-top: 1.5rem;
+    margin-top: 1rem;
+  }
+}
+
+@media (min-height: 801px) {
+  .spline-scene-enhanced {
+    padding-top: 2rem;
+    margin-top: 1.5rem;
+  }
+}
+
+/* Responsive centering adjustments for expanded robot animation containers (200-280% width) */
+@media (max-width: 768px) {
+  .spline-scene-container {
+    margin-left: -90%;
+    margin-top: -30%;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .spline-scene-container {
+    margin-left: -75%;
+    margin-top: -30%;
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+  .spline-scene-container {
+    margin-left: -60%;
+    margin-top: -30%;
+  }
+}
+
+@media (min-width: 1441px) {
+  .spline-scene-container {
+    margin-left: -50%;
+    margin-top: -30%;
+  }
 }

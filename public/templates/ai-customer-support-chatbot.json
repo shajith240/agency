@@ -1,0 +1,249 @@
+{
+  "name": "AI Customer Support Chatbot",
+  "description": "Intelligent chatbot workflow for handling customer inquiries with natural language processing",
+  "version": "1.0.0",
+  "author": "SharpFlow",
+  "category": "chatbots",
+  "tags": ["customer-service", "support", "ai", "nlp", "zendesk", "intercom"],
+  "requirements": {
+    "n8n_version": ">=1.0.0",
+    "nodes": [
+      "n8n-nodes-base.webhook",
+      "n8n-nodes-base.openai",
+      "n8n-nodes-base.zendesk",
+      "n8n-nodes-base.http-request",
+      "n8n-nodes-base.if",
+      "n8n-nodes-base.set"
+    ],
+    "credentials": [
+      "openAiApi",
+      "zendeskApi",
+      "slackApi"
+    ]
+  },
+  "workflow": {
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "customer-support",
+          "responseMode": "responseNode",
+          "options": {}
+        },
+        "id": "webhook-node",
+        "name": "Customer Inquiry Webhook",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 1,
+        "position": [240, 300]
+      },
+      {
+        "parameters": {
+          "model": "gpt-4",
+          "messages": {
+            "messageValues": [
+              {
+                "role": "system",
+                "message": "You are a helpful customer support assistant. Analyze the customer inquiry and provide appropriate responses. If the issue requires human intervention, indicate that in your response."
+              },
+              {
+                "role": "user",
+                "message": "={{ $json.message }}"
+              }
+            ]
+          },
+          "options": {
+            "temperature": 0.3,
+            "maxTokens": 500
+          }
+        },
+        "id": "openai-analysis",
+        "name": "AI Analysis",
+        "type": "n8n-nodes-base.openai",
+        "typeVersion": 1,
+        "position": [460, 300]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict"
+            },
+            "conditions": [
+              {
+                "leftValue": "={{ $json.choices[0].message.content }}",
+                "rightValue": "human intervention",
+                "operator": {
+                  "type": "string",
+                  "operation": "contains"
+                }
+              }
+            ],
+            "combinator": "and"
+          }
+        },
+        "id": "escalation-check",
+        "name": "Check for Escalation",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [680, 300]
+      },
+      {
+        "parameters": {
+          "resource": "ticket",
+          "operation": "create",
+          "subject": "={{ $('Customer Inquiry Webhook').item.json.subject }}",
+          "description": "={{ $('Customer Inquiry Webhook').item.json.message }}",
+          "priority": "normal",
+          "status": "new",
+          "type": "question",
+          "additionalFields": {
+            "tags": ["ai-escalated", "customer-support"]
+          }
+        },
+        "id": "create-ticket",
+        "name": "Create Zendesk Ticket",
+        "type": "n8n-nodes-base.zendesk",
+        "typeVersion": 1,
+        "position": [900, 200]
+      },
+      {
+        "parameters": {
+          "values": {
+            "string": [
+              {
+                "name": "response",
+                "value": "={{ $('AI Analysis').item.json.choices[0].message.content }}"
+              },
+              {
+                "name": "confidence",
+                "value": "high"
+              },
+              {
+                "name": "escalated",
+                "value": "false"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "format-response",
+        "name": "Format AI Response",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3,
+        "position": [900, 400]
+      },
+      {
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={{ $json }}"
+        },
+        "id": "response-node",
+        "name": "Send Response",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1,
+        "position": [1120, 300]
+      }
+    ],
+    "connections": {
+      "Customer Inquiry Webhook": {
+        "main": [
+          [
+            {
+              "node": "AI Analysis",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AI Analysis": {
+        "main": [
+          [
+            {
+              "node": "Check for Escalation",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Check for Escalation": {
+        "main": [
+          [
+            {
+              "node": "Create Zendesk Ticket",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Format AI Response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create Zendesk Ticket": {
+        "main": [
+          [
+            {
+              "node": "Send Response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Format AI Response": {
+        "main": [
+          [
+            {
+              "node": "Send Response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    }
+  },
+  "setup_instructions": {
+    "steps": [
+      {
+        "step": 1,
+        "title": "Import Workflow",
+        "description": "Import this JSON file into your n8n instance"
+      },
+      {
+        "step": 2,
+        "title": "Configure Credentials",
+        "description": "Set up OpenAI API, Zendesk API, and Slack API credentials"
+      },
+      {
+        "step": 3,
+        "title": "Test Webhook",
+        "description": "Test the webhook endpoint with sample customer inquiries"
+      },
+      {
+        "step": 4,
+        "title": "Customize Responses",
+        "description": "Modify the AI prompt and response logic for your specific use case"
+      },
+      {
+        "step": 5,
+        "title": "Deploy",
+        "description": "Activate the workflow and integrate with your customer support system"
+      }
+    ]
+  },
+  "customization_options": {
+    "ai_model": "Can be changed to gpt-3.5-turbo for cost optimization",
+    "escalation_keywords": "Customize keywords that trigger human escalation",
+    "response_tone": "Adjust AI personality and response style",
+    "integration_platforms": "Add support for other helpdesk systems"
+  }
+}

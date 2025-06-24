@@ -1,0 +1,88 @@
+<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a0a;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#1a1a1a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0a0a0a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="brandGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#f97316;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ef4444;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="cardGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#262626;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#171717;stop-opacity:0.9" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="300" fill="url(#bgGradient)"/>
+  
+  <!-- Ambient glow effects -->
+  <circle cx="80" cy="100" r="50" fill="url(#brandGradient)" opacity="0.12" filter="blur(25px)"/>
+  <circle cx="300" cy="200" r="35" fill="url(#brandGradient)" opacity="0.08" filter="blur(18px)"/>
+  
+  <!-- Main content area -->
+  <rect x="20" y="20" width="360" height="260" rx="12" fill="url(#cardGradient)" stroke="rgba(251, 191, 36, 0.2)" stroke-width="1"/>
+  
+  <!-- Header -->
+  <rect x="40" y="40" width="320" height="35" rx="8" fill="rgba(0,0,0,0.3)"/>
+  <circle cx="58" cy="57" r="6" fill="url(#brandGradient)"/>
+  <text x="75" y="62" fill="#ffffff" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Shopping Assistant</text>
+  
+  <!-- Product cards -->
+  <g transform="translate(50, 90)">
+    <rect x="0" y="0" width="80" height="60" rx="6" fill="rgba(255,255,255,0.08)"/>
+    <rect x="5" y="5" width="70" height="35" rx="3" fill="rgba(251, 191, 36, 0.1)"/>
+    <text x="40" y="52" fill="#e5e5e5" font-family="Arial, sans-serif" font-size="8" text-anchor="middle">Product A</text>
+  </g>
+  
+  <g transform="translate(140, 90)">
+    <rect x="0" y="0" width="80" height="60" rx="6" fill="rgba(255,255,255,0.08)"/>
+    <rect x="5" y="5" width="70" height="35" rx="3" fill="rgba(249, 115, 22, 0.1)"/>
+    <text x="40" y="52" fill="#e5e5e5" font-family="Arial, sans-serif" font-size="8" text-anchor="middle">Product B</text>
+  </g>
+  
+  <g transform="translate(230, 90)">
+    <rect x="0" y="0" width="80" height="60" rx="6" fill="rgba(255,255,255,0.08)"/>
+    <rect x="5" y="5" width="70" height="35" rx="3" fill="rgba(239, 68, 68, 0.1)"/>
+    <text x="40" y="52" fill="#e5e5e5" font-family="Arial, sans-serif" font-size="8" text-anchor="middle">Product C</text>
+  </g>
+  
+  <!-- Chat interaction -->
+  <rect x="50" y="170" width="180" height="25" rx="12" fill="rgba(255,255,255,0.1)"/>
+  <text x="60" y="185" fill="#e5e5e5" font-family="Arial, sans-serif" font-size="10">Looking for wireless headphones</text>
+  
+  <!-- AI recommendation -->
+  <rect x="120" y="205" width="200" height="35" rx="12" fill="url(#brandGradient)" opacity="0.8"/>
+  <text x="130" y="218" fill="#ffffff" font-family="Arial, sans-serif" font-size="10" font-weight="500">Based on your preferences, I recommend</text>
+  <text x="130" y="230" fill="#ffffff" font-family="Arial, sans-serif" font-size="10" font-weight="500">the Sony WH-1000XM4 - great reviews!</text>
+  
+  <!-- Shopping cart icon -->
+  <g transform="translate(340, 180)">
+    <rect x="0" y="0" width="20" height="20" rx="3" fill="rgba(251, 191, 36, 0.2)"/>
+    <path d="M5 5 L15 5 L14 12 L6 12 Z" stroke="url(#brandGradient)" stroke-width="1.5" fill="none"/>
+    <circle cx="8" cy="16" r="1" fill="url(#brandGradient)"/>
+    <circle cx="12" cy="16" r="1" fill="url(#brandGradient)"/>
+  </g>
+  
+  <!-- Integration badges -->
+  <g transform="translate(50, 250)">
+    <rect x="0" y="0" width="40" height="16" rx="8" fill="rgba(255,255,255,0.1)"/>
+    <text x="20" y="10" fill="#ffffff" font-family="Arial, sans-serif" font-size="7" text-anchor="middle">Shopify</text>
+  </g>
+  
+  <g transform="translate(100, 250)">
+    <rect x="0" y="0" width="50" height="16" rx="8" fill="rgba(255,255,255,0.1)"/>
+    <text x="25" y="10" fill="#ffffff" font-family="Arial, sans-serif" font-size="7" text-anchor="middle">WooCommerce</text>
+  </g>
+  
+  <!-- Free badge -->
+  <rect x="300" y="30" width="60" height="18" rx="9" fill="rgba(34, 197, 94, 0.2)"/>
+  <text x="330" y="41" fill="#22c55e" font-family="Arial, sans-serif" font-size="9" text-anchor="middle" font-weight="bold">FREE</text>
+  
+  <!-- Category badge -->
+  <rect x="300" y="52" width="80" height="18" rx="9" fill="rgba(251, 191, 36, 0.2)"/>
+  <text x="340" y="63" fill="url(#brandGradient)" font-family="Arial, sans-serif" font-size="8" text-anchor="middle" font-weight="bold">E-COMMERCE</text>
+</svg>

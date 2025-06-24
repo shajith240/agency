@@ -1,0 +1,117 @@
+<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a0a;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#1a1a1a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0a0a0a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="brandGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#f97316;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ef4444;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="cardGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#262626;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#171717;stop-opacity:0.9" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="300" fill="url(#bgGradient)"/>
+  
+  <!-- Ambient glow effects -->
+  <circle cx="120" cy="70" r="45" fill="url(#brandGradient)" opacity="0.1" filter="blur(20px)"/>
+  <circle cx="280" cy="180" r="35" fill="url(#brandGradient)" opacity="0.08" filter="blur(15px)"/>
+  
+  <!-- Main content area -->
+  <rect x="20" y="20" width="360" height="260" rx="12" fill="url(#cardGradient)" stroke="rgba(251, 191, 36, 0.2)" stroke-width="1"/>
+  
+  <!-- Header -->
+  <rect x="40" y="40" width="320" height="35" rx="8" fill="rgba(0,0,0,0.3)"/>
+  <rect x="50" y="48" width="8" height="10" fill="url(#brandGradient)" rx="1"/>
+  <rect x="50" y="60" width="12" height="2" fill="url(#brandGradient)" rx="1"/>
+  <text x="70" y="62" fill="#ffffff" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Invoice Processing</text>
+  
+  <!-- Document flow -->
+  <!-- PDF Input -->
+  <g transform="translate(50, 90)">
+    <rect x="0" y="0" width="60" height="40" rx="4" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.2)"/>
+    <text x="30" y="18" fill="#e5e5e5" font-family="Arial, sans-serif" font-size="8" text-anchor="middle">PDF</text>
+    <text x="30" y="28" fill="#e5e5e5" font-family="Arial, sans-serif" font-size="8" text-anchor="middle">Invoice</text>
+  </g>
+  
+  <!-- Arrow -->
+  <path d="M120 110 L140 110" stroke="url(#brandGradient)" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- OCR Processing -->
+  <g transform="translate(150, 90)">
+    <rect x="0" y="0" width="60" height="40" rx="4" fill="rgba(251, 191, 36, 0.1)" stroke="rgba(251, 191, 36, 0.3)"/>
+    <text x="30" y="18" fill="url(#brandGradient)" font-family="Arial, sans-serif" font-size="8" text-anchor="middle" font-weight="bold">OCR</text>
+    <text x="30" y="28" fill="url(#brandGradient)" font-family="Arial, sans-serif" font-size="8" text-anchor="middle">Extract</text>
+    
+    <!-- Processing animation -->
+    <circle cx="45" cy="8" r="2" fill="url(#brandGradient)" opacity="0.6">
+      <animate attributeName="opacity" values="0.6;1;0.6" dur="1s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  
+  <!-- Arrow -->
+  <path d="M220 110 L240 110" stroke="url(#brandGradient)" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Data Validation -->
+  <g transform="translate(250, 90)">
+    <rect x="0" y="0" width="60" height="40" rx="4" fill="rgba(249, 115, 22, 0.1)" stroke="rgba(249, 115, 22, 0.3)"/>
+    <text x="30" y="18" fill="#f97316" font-family="Arial, sans-serif" font-size="8" text-anchor="middle" font-weight="bold">Validate</text>
+    <text x="30" y="28" fill="#f97316" font-family="Arial, sans-serif" font-size="8" text-anchor="middle">Data</text>
+  </g>
+  
+  <!-- Extracted data preview -->
+  <rect x="50" y="150" width="260" height="60" rx="6" fill="rgba(0,0,0,0.4)" stroke="rgba(255,255,255,0.1)"/>
+  <text x="60" y="168" fill="rgba(255,255,255,0.8)" font-family="Arial, sans-serif" font-size="10" font-weight="bold">Extracted Data:</text>
+  <text x="60" y="182" fill="#e5e5e5" font-family="Arial, sans-serif" font-size="9">Invoice #: INV-2024-001</text>
+  <text x="60" y="194" fill="#e5e5e5" font-family="Arial, sans-serif" font-size="9">Amount: $1,250.00</text>
+  <text x="180" y="182" fill="#e5e5e5" font-family="Arial, sans-serif" font-size="9">Vendor: Acme Corp</text>
+  <text x="180" y="194" fill="#e5e5e5" font-family="Arial, sans-serif" font-size="9">Due: 2024-02-15</text>
+  
+  <!-- QuickBooks integration -->
+  <g transform="translate(320, 150)">
+    <rect x="0" y="0" width="40" height="30" rx="4" fill="rgba(34, 197, 94, 0.2)"/>
+    <text x="20" y="18" fill="#22c55e" font-family="Arial, sans-serif" font-size="8" text-anchor="middle" font-weight="bold">QB</text>
+    <text x="20" y="26" fill="#22c55e" font-family="Arial, sans-serif" font-size="6" text-anchor="middle">Synced</text>
+  </g>
+  
+  <!-- Success indicator -->
+  <circle cx="340" cy="135" r="4" fill="#22c55e">
+    <animate attributeName="r" values="4;6;4" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Integration badges -->
+  <g transform="translate(50, 230)">
+    <rect x="0" y="0" width="50" height="16" rx="8" fill="rgba(255,255,255,0.1)"/>
+    <text x="25" y="10" fill="#ffffff" font-family="Arial, sans-serif" font-size="7" text-anchor="middle">QuickBooks</text>
+  </g>
+  
+  <g transform="translate(110, 230)">
+    <rect x="0" y="0" width="30" height="16" rx="8" fill="rgba(255,255,255,0.1)"/>
+    <text x="15" y="10" fill="#ffffff" font-family="Arial, sans-serif" font-size="7" text-anchor="middle">Xero</text>
+  </g>
+  
+  <g transform="translate(150, 230)">
+    <rect x="0" y="0" width="35" height="16" rx="8" fill="rgba(255,255,255,0.1)"/>
+    <text x="17.5" y="10" fill="#ffffff" font-family="Arial, sans-serif" font-size="7" text-anchor="middle">OCR.space</text>
+  </g>
+  
+  <!-- Stats -->
+  <text x="50" y="260" fill="rgba(255,255,255,0.6)" font-family="Arial, sans-serif" font-size="10">98% Accuracy • Auto-Processing • Enterprise Ready</text>
+  
+  <!-- Category badge -->
+  <rect x="280" y="30" width="100" height="18" rx="9" fill="rgba(251, 191, 36, 0.2)"/>
+  <text x="330" y="41" fill="url(#brandGradient)" font-family="Arial, sans-serif" font-size="8" text-anchor="middle" font-weight="bold">WORKFLOW</text>
+  
+  <!-- Arrow marker definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="url(#brandGradient)"/>
+    </marker>
+  </defs>
+</svg>
