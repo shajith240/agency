@@ -24,7 +24,7 @@ class SplineErrorBoundary extends Component<{ children: ReactNode; onError?: (er
     return { hasError: true, error }
   }
 
-  componentDidCatch(error: Error, errorInfo: any) {
+  componentDidCatch(error: Error) {
     console.warn('Spline 3D scene error (non-critical):', error.message)
     this.props.onError?.(error)
   }
@@ -54,9 +54,7 @@ class SplineErrorBoundary extends Component<{ children: ReactNode; onError?: (er
 }
 
 export function SplineScene({ scene, className }: SplineSceneProps) {
-  const [isVisible, setIsVisible] = useState(false);
   const [shouldLoad, setShouldLoad] = useState(false);
-  const [hasError, setHasError] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Intersection Observer for lazy loading
@@ -64,11 +62,8 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setIsVisible(true);
           // Delay loading slightly to improve perceived performance
           setTimeout(() => setShouldLoad(true), 100);
-        } else {
-          setIsVisible(false);
         }
       },
       { threshold: 0.1, rootMargin: '50px' }
@@ -94,7 +89,6 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
         <SplineErrorBoundary
           onError={(error) => {
             console.warn('Spline 3D scene error (non-critical):', error.message);
-            setHasError(true);
           }}
         >
           <Suspense

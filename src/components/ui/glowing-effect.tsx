@@ -33,14 +33,14 @@ const GlowingEffect = memo(
     const lastPosition = useRef({ x: 0, y: 0 });
     const animationFrameRef = useRef<number>(0);
     const isVisibleRef = useRef(true);
-    const [isIntersecting, setIsIntersecting] = useState(true);
+
 
     // Intersection Observer for performance optimization
     useEffect(() => {
       const observer = new IntersectionObserver(
         ([entry]) => {
           isVisibleRef.current = entry.isIntersecting;
-          setIsIntersecting(entry.isIntersecting);
+
         },
         { threshold: 0.1 }
       );

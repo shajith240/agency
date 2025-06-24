@@ -1,17 +1,15 @@
 import { Users, Clock, TrendingUp, Award } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { GlowingEffect } from "@/components/ui/glowing-effect";
-import { cn } from "@/lib/utils";
 
 interface StatCardProps {
   icon: React.ReactNode;
   value: string;
   change: string;
-  changeColor?: string; // Made optional since we're using consistent orange styling
   label: string;
 }
 
-const StatCard = ({ icon, value, change, changeColor, label }: StatCardProps) => {
+const StatCard = ({ icon, value, change, label }: StatCardProps) => {
   return (
     <div className="min-h-[14rem] list-none">
       <div className="relative h-full rounded-[1.25rem] border-[0.75px] border-neutral-800/50 p-2 md:rounded-[1.5rem] md:p-3 hover:border-neutral-700/50 transition-all duration-300">
@@ -88,7 +86,7 @@ function Stats() {
               </h2>
               <p className="font-sans text-lg md:text-xl lg:max-w-2xl leading-relaxed text-neutral-300 text-left font-medium">
                 Our agency has helped hundreds of businesses automate their operations,
-                reduce costs, and boost productivity. See the real impact we've made
+                reduce costs, and boost productivity. See the real impact we&apos;ve made
                 across industries and company sizes.
               </p>
             </div>
@@ -101,28 +99,24 @@ function Stats() {
                 icon={<Users className="h-6 w-6" />}
                 value="500+"
                 change="+45%"
-                changeColor="text-orange-400"
                 label="Clients Served"
               />
               <StatCard
                 icon={<Clock className="h-6 w-6" />}
                 value="2.4M+"
                 change="+32%"
-                changeColor="text-orange-400"
                 label="Hours Saved"
               />
               <StatCard
                 icon={<TrendingUp className="h-6 w-6" />}
                 value="85%"
                 change="+12%"
-                changeColor="text-orange-400"
                 label="Cost Reduction"
               />
               <StatCard
                 icon={<Award className="h-6 w-6" />}
                 value="4.9"
                 change="+0.3"
-                changeColor="text-orange-400"
                 label="Client Rating"
               />
             </div>

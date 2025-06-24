@@ -57,7 +57,7 @@ function checkIsLowEndDevice(): boolean {
   if (cores <= 2) return true;
 
   // Check memory if available
-  const memory = (navigator as any).deviceMemory;
+  const memory = (navigator as unknown as { deviceMemory?: number }).deviceMemory;
   if (memory && memory <= 2) return true;
 
   // Check user agent for low-end indicators
@@ -85,11 +85,11 @@ function checkWebGLSupport(): boolean {
 
 function checkHighRefreshRate(): boolean {
   // This is a simplified check - in reality, you'd need more sophisticated detection
-  return window.screen && (window.screen as any).refreshRate > 60;
+  return window.screen && (window.screen as unknown as { refreshRate?: number }).refreshRate ? (window.screen as unknown as { refreshRate: number }).refreshRate > 60 : false;
 }
 
 function estimateMemoryLimit(): number {
-  const memory = (navigator as any).deviceMemory;
+  const memory = (navigator as unknown as { deviceMemory?: number }).deviceMemory;
   if (memory) return memory * 1024; // Convert GB to MB
   
   // Fallback estimation based on other factors
@@ -98,7 +98,7 @@ function estimateMemoryLimit(): number {
 }
 
 function getConnectionSpeed(): 'slow' | 'fast' | 'unknown' {
-  const connection = (navigator as any).connection;
+  const connection = (navigator as unknown as { connection?: { effectiveType: string } }).connection;
   if (!connection) return 'unknown';
   
   const effectiveType = connection.effectiveType;
@@ -255,12 +255,12 @@ export function measurePerformance(name: string, fn: () => void) {
   console.log(`${name} took ${end - start} milliseconds`);
 }
 
-export function throttle<T extends (...args: any[]) => any>(
+export function throttle<T extends (...args: unknown[]) => unknown>(
   func: T,
   limit: number
 ): (...args: Parameters<T>) => void {
   let inThrottle: boolean;
-  return function(this: any, ...args: Parameters<T>) {
+  return function(this: unknown, ...args: Parameters<T>) {
     if (!inThrottle) {
       func.apply(this, args);
       inThrottle = true;
@@ -269,12 +269,12 @@ export function throttle<T extends (...args: any[]) => any>(
   };
 }
 
-export function debounce<T extends (...args: any[]) => any>(
+export function debounce<T extends (...args: unknown[]) => unknown>(
   func: T,
   wait: number
 ): (...args: Parameters<T>) => void {
   let timeout: NodeJS.Timeout;
-  return function(this: any, ...args: Parameters<T>) {
+  return function(this: unknown, ...args: Parameters<T>) {
     clearTimeout(timeout);
     timeout = setTimeout(() => func.apply(this, args), wait);
   };

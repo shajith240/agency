@@ -71,7 +71,7 @@ export function ContactSection() {
       } else {
         throw new Error('Form submission failed')
       }
-    } catch (error) {
+    } catch {
       toast.error('Something went wrong. Please try again or email us directly.')
     } finally {
       setIsSubmitting(false)
@@ -211,7 +211,7 @@ export function ContactSection() {
                           <SelectItem value="5k-15k">$5,000 - $15,000</SelectItem>
                           <SelectItem value="15k-50k">$15,000 - $50,000</SelectItem>
                           <SelectItem value="50k-plus">$50,000+</SelectItem>
-                          <SelectItem value="discuss">Let's discuss</SelectItem>
+                          <SelectItem value="discuss">Let&apos;s discuss</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>

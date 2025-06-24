@@ -9,15 +9,7 @@ import {
     NavigationMenuList,
     NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Menu, MoveRight, X, Phone, Mail } from "lucide-react";
+import { Menu, MoveRight, X, Mail } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
 

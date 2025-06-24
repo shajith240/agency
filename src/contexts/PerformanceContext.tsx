@@ -79,7 +79,7 @@ export function PerformanceProvider({ children }: { children: React.ReactNode })
   useEffect(() => {
     if ('memory' in performance) {
       const checkMemoryPressure = () => {
-        const memory = (performance as any).memory;
+        const memory = (performance as unknown as { memory: { usedJSHeapSize: number; jsHeapSizeLimit: number } }).memory;
         const usedRatio = memory.usedJSHeapSize / memory.jsHeapSizeLimit;
         
         if (usedRatio > 0.8 && !isLowPerformance) {

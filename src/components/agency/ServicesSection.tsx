@@ -1,6 +1,6 @@
 "use client";
 
-import { Bot, Workflow, Zap, Database, Mail, Calendar, FileText, Target, ShoppingCart, Users, BarChart3, Plug } from "lucide-react";
+import { Bot, Workflow, Database, Mail, Target, Users } from "lucide-react";
 import { GlowingEffect } from "@/components/ui/glowing-effect";
 import { cn } from "@/lib/utils";
 

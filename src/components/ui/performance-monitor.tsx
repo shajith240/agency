@@ -33,8 +33,8 @@ export function PerformanceMonitor({ enabled = false }: { enabled?: boolean }) {
         const fps = Math.round((frameCountRef.current * 1000) / (now - lastTimeRef.current));
         
         // Get memory usage if available
-        const memoryUsage = (performance as any).memory 
-          ? Math.round((performance as any).memory.usedJSHeapSize / 1024 / 1024)
+        const memoryUsage = (performance as unknown as { memory?: { usedJSHeapSize: number } }).memory
+          ? Math.round((performance as unknown as { memory: { usedJSHeapSize: number } }).memory.usedJSHeapSize / 1024 / 1024)
           : 0;
 
         setMetrics(prev => ({

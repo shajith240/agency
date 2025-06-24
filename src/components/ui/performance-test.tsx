@@ -89,7 +89,7 @@ export function PerformanceTest({ enabled = false }: { enabled?: boolean }) {
     if (!enabled || !isRunning) return;
 
     const interval = setInterval(() => {
-      const memory = (performance as any).memory;
+      const memory = (performance as unknown as { memory?: { usedJSHeapSize: number } }).memory;
       const newMetrics: PerformanceMetrics = {
         fps: currentFPS,
         frameTime: 1000 / currentFPS,
