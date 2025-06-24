@@ -1,9 +1,9 @@
-import { Feature } from "@/components/ui/feature-section-with-grid"
+import { BrowseByCategorySection } from "@/components/ui/feature-section-with-grid"
 
 function FeatureDemo() {
   return (
     <div className="w-full">
-      <Feature />
+      <BrowseByCategorySection />
     </div>
   );
 }
