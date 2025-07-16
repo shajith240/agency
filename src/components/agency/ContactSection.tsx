@@ -45,7 +45,7 @@ function FormField({
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className={`bg-neutral-900/50 border-neutral-700 text-white ${
+        className={`bg-neutral-900/50 border-neutral-700 text-white min-h-[44px] text-base ${
           error ? 'border-red-500 focus:border-red-500' : ''
         } ${className}`}
         required={required}
@@ -224,11 +224,7 @@ export function ContactSection() {
   }
 
   return (
-    <section id="contact" className="pt-8 md:pt-16 pb-16 md:pb-32 bg-black/[0.96] relative w-full overflow-hidden">
-      {/* Enhanced ambient background lighting following design system */}
-      <div className="absolute inset-0 ambient-gradient-overlay opacity-60" />
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-yellow-400/5 via-orange-500/4 to-transparent rounded-full blur-3xl" />
-      <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-gradient-to-tl from-red-500/4 via-orange-500/3 to-transparent rounded-full blur-3xl" />
+    <section id="contact" className="py-16 md:py-24 relative w-full">
 
       <div className="container mx-auto space-y-12 relative z-10">
         {/* Centered Content Layout */}
@@ -248,15 +244,15 @@ export function ContactSection() {
             </p>
           </div>
 
-          {/* Action Buttons - Following 8px grid spacing */}
-          <div className="flex flex-col sm:flex-row gap-6 lg:gap-8">
+          {/* Action Buttons - Mobile optimized spacing and touch targets */}
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 lg:gap-8">
             <Button
               size="lg"
-              className="text-white hover:text-white font-semibold text-lg md:text-xl px-8 md:px-12 py-4 md:py-6 transition-all duration-300 border-2 border-orange-500/70 hover:border-orange-500 backdrop-blur-sm bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 hover:from-yellow-300 hover:via-orange-400 hover:to-red-400 shadow-lg hover:shadow-xl ring-1 ring-white/20 hover:ring-white/30 brand-glow-hover hover:scale-105 active:scale-95"
+              className="text-white hover:text-white font-semibold text-base sm:text-lg md:text-xl px-6 sm:px-8 md:px-12 py-3 sm:py-4 md:py-6 min-h-[44px] transition-colors duration-200 border-2 border-orange-500/70 hover:border-orange-500 bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 hover:from-yellow-300 hover:via-orange-400 hover:to-red-400 shadow-md hover:shadow-lg contact-button-optimized"
               asChild
             >
               <Link href="https://calendly.com/sharpflow" target="_blank">
-                <Calendar className="mr-3 w-5 h-5" />
+                <Calendar className="mr-2 sm:mr-3 w-4 h-4 sm:w-5 sm:h-5" />
                 Book Free Call
               </Link>
             </Button>
@@ -265,22 +261,22 @@ export function ContactSection() {
               <DialogTrigger asChild>
                 <Button
                   size="lg"
-                  className="text-white hover:text-white font-semibold text-lg md:text-xl px-8 md:px-12 py-4 md:py-6 transition-all duration-300 border-2 border-white/30 hover:border-orange-500/60 backdrop-blur-sm bg-gradient-to-r from-white/5 to-white/10 hover:from-orange-500/20 hover:to-red-500/30 shadow-sm hover:shadow-md brand-glow-hover hover:scale-105 active:scale-95"
+                  className="text-white hover:text-white font-semibold text-base sm:text-lg md:text-xl px-6 sm:px-8 md:px-12 py-3 sm:py-4 md:py-6 min-h-[44px] transition-colors duration-200 border-2 border-white/30 hover:border-orange-500/60 bg-gradient-to-r from-white/5 to-white/10 hover:from-orange-500/20 hover:to-red-500/30 shadow-sm hover:shadow-md contact-button-optimized"
                 >
-                  <MessageSquare className="mr-3 w-5 h-5" />
+                  <MessageSquare className="mr-2 sm:mr-3 w-4 h-4 sm:w-5 sm:h-5" />
                   Get Started
                 </Button>
               </DialogTrigger>
 
-              {/* Modal Content - Contact Form */}
-              <DialogContent className="bg-black/95 border border-neutral-800/50 backdrop-blur-sm max-w-2xl max-h-[90vh] overflow-y-auto">
+              {/* Modal Content - Mobile optimized Contact Form */}
+              <DialogContent className="bg-black/95 border border-neutral-800/50 backdrop-blur-sm max-w-2xl max-h-[90vh] overflow-y-auto mx-4 sm:mx-auto">
                 <DialogHeader>
-                  <DialogTitle className="text-2xl font-semibold text-white mb-2">Get Your Custom Quote</DialogTitle>
-                  <p className="text-neutral-400">Tell us about your business and automation needs</p>
+                  <DialogTitle className="text-xl sm:text-2xl font-semibold text-white mb-2">Get Your Custom Quote</DialogTitle>
+                  <p className="text-sm sm:text-base text-neutral-400">Tell us about your business and automation needs</p>
                 </DialogHeader>
 
-                <form onSubmit={handleSubmit} className="space-y-6 mt-6">
-                  <div className="grid md:grid-cols-2 gap-4">
+                <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6 mt-4 sm:mt-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <FormField
                       id="businessName"
                       label="Business Name"
@@ -299,7 +295,7 @@ export function ContactSection() {
                     />
                   </div>
 
-                  <div className="grid md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <FormField
                       id="email"
                       label="Email"
@@ -424,7 +420,7 @@ export function ContactSection() {
             <Button
               size="lg"
               variant="ghost"
-              className="text-white hover:text-white font-semibold text-lg md:text-xl px-8 md:px-12 py-4 md:py-6 transition-all duration-300 border-2 border-white/30 hover:border-orange-500/60 backdrop-blur-sm bg-gradient-to-r from-white/5 to-white/10 hover:from-orange-500/20 hover:to-red-500/30 shadow-sm hover:shadow-md brand-glow-hover hover:scale-105 active:scale-95"
+              className="text-white hover:text-white font-semibold text-base sm:text-lg md:text-xl px-6 sm:px-8 md:px-12 py-3 sm:py-4 md:py-6 min-h-[44px] transition-colors duration-200 border-2 border-white/30 hover:border-orange-500/60 bg-gradient-to-r from-white/5 to-white/10 hover:from-orange-500/20 hover:to-red-500/30 shadow-sm hover:shadow-md contact-button-optimized"
               asChild
             >
               <Link href="mailto:contact@sharpflow.ai">

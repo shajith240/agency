@@ -244,25 +244,29 @@
 
 /* ===== ENHANCED VISUAL DEPTH UTILITIES ===== */
 
-/* Brand-colored ambient gradient overlays */
+/* Brand-colored ambient gradient overlays - optimized for performance */
 .ambient-gradient-overlay {
   background: radial-gradient(
     ellipse 120% 80% at 50% 0%,
-    rgba(251, 191, 36, 0.08) 0%,
-    rgba(249, 115, 22, 0.06) 25%,
-    rgba(239, 68, 68, 0.04) 50%,
-    transparent 70%
+    rgba(251, 191, 36, 0.04) 0%,
+    rgba(249, 115, 22, 0.03) 25%,
+    rgba(239, 68, 68, 0.02) 50%,
+    transparent 60%
   );
+  contain: layout style;
+  will-change: auto;
 }
 
 .ambient-gradient-overlay-bottom {
   background: radial-gradient(
     ellipse 120% 80% at 50% 100%,
-    rgba(251, 191, 36, 0.06) 0%,
-    rgba(249, 115, 22, 0.04) 25%,
-    rgba(239, 68, 68, 0.03) 50%,
-    transparent 70%
+    rgba(251, 191, 36, 0.03) 0%,
+    rgba(249, 115, 22, 0.02) 25%,
+    rgba(239, 68, 68, 0.015) 50%,
+    transparent 60%
   );
+  contain: layout style;
+  will-change: auto;
 }
 
 .ambient-gradient-overlay-center {
@@ -403,6 +407,7 @@
   transform: translateZ(0);
   backface-visibility: hidden;
   perspective: 1000px;
+  contain: layout style paint;
 }
 
 .performance-optimized:hover,
@@ -412,6 +417,41 @@
 
 .performance-optimized:not(:hover):not(.animating) {
   will-change: auto;
+}
+
+/* Scroll performance optimizations */
+.scroll-optimized {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  contain: layout style;
+  will-change: auto;
+}
+
+/* Reduce blur effects during scroll for better performance */
+@media (prefers-reduced-motion: no-preference) {
+  .blur-on-scroll {
+    transition: filter 0.05s ease-out;
+  }
+
+  body.scrolling .blur-on-scroll {
+    filter: blur(0.5px) !important;
+  }
+}
+
+/* Cursor spotlight optimization */
+.cursor-spotlight {
+  transition: opacity 0.1s ease-out;
+}
+
+body.scrolling .cursor-spotlight {
+  opacity: 0.2 !important;
+}
+
+/* Optimize gradient rendering */
+.gradient-performance {
+  background-attachment: local;
+  background-repeat: no-repeat;
+  contain: layout style;
 }
 
 /* Optimized gradient effects */
@@ -433,6 +473,154 @@
 /* Prevent horizontal scrolling from expanded 3D containers */
 body {
   overflow-x: hidden;
+}
+
+/* Scroll performance optimizations */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Optimize scrolling performance */
+* {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Reduce paint and layout during scroll */
+.scroll-container {
+  contain: layout style paint;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Optimize backdrop filters during scroll */
+body.scrolling .enhanced-backdrop-blur {
+  backdrop-filter: blur(4px) saturate(120%) !important;
+  -webkit-backdrop-filter: blur(4px) saturate(120%) !important;
+}
+
+/* Mobile-specific optimizations */
+@media (max-width: 768px) {
+  /* Ensure minimum touch target sizes */
+  button, a, input, select, textarea {
+    min-height: 44px;
+  }
+
+  /* Optimize text sizing for mobile readability */
+  .mobile-text-optimize {
+    font-size: 16px !important; /* Prevents zoom on iOS */
+  }
+
+  /* Reduce motion on mobile for better performance */
+  .mobile-reduce-motion {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* Mobile-specific spacing */
+  .mobile-spacing {
+    padding: 1rem;
+    margin: 0.5rem 0;
+  }
+
+  /* Optimize form inputs for mobile */
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  textarea,
+  select {
+    font-size: 16px; /* Prevents zoom on iOS */
+    padding: 12px 16px;
+  }
+}
+
+/* Section-specific scroll performance optimizations */
+
+/* Contact Section Optimizations */
+.contact-bg-optimized {
+  will-change: auto;
+  contain: layout style;
+  transform: translateZ(0);
+}
+
+.contact-blur-optimized {
+  will-change: auto;
+  contain: layout style paint;
+  transform: translateZ(0);
+}
+
+.contact-button-optimized {
+  will-change: auto;
+  contain: layout style;
+  transform: translateZ(0);
+}
+
+.contact-button-optimized:hover {
+  will-change: background-color, border-color;
+}
+
+/* Footer Section Optimizations */
+.footer-bg-optimized {
+  will-change: auto;
+  contain: layout style;
+  transform: translateZ(0);
+}
+
+.footer-blur-optimized {
+  will-change: auto;
+  contain: layout style paint;
+  transform: translateZ(0);
+}
+
+.footer-link-optimized {
+  will-change: auto;
+  contain: layout style;
+  transform: translateZ(0);
+}
+
+.footer-link-optimized:hover {
+  will-change: color;
+}
+
+.footer-gradient-optimized {
+  will-change: auto;
+  contain: layout style;
+  transform: translateZ(0);
+}
+
+/* Scroll-specific optimizations for these sections */
+body.scrolling .contact-bg-optimized,
+body.scrolling .footer-bg-optimized {
+  opacity: 0.1 !important;
+}
+
+body.scrolling .contact-blur-optimized,
+body.scrolling .footer-blur-optimized {
+  filter: blur(0.5px) !important;
+  opacity: 0.3 !important;
+}
+
+body.scrolling .contact-button-optimized,
+body.scrolling .footer-link-optimized {
+  transition: none !important;
+}
+
+/* Reduce expensive effects during scroll in these sections */
+@media (prefers-reduced-motion: no-preference) {
+  body.scrolling #contact,
+  body.scrolling footer {
+    animation-play-state: paused !important;
+  }
+
+  body.scrolling #contact *,
+  body.scrolling footer * {
+    animation-play-state: paused !important;
+  }
 }
 
 /* Hero section specific overflow handling for significantly expanded robot animation */

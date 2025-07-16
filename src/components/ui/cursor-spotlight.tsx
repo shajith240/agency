@@ -30,6 +30,11 @@ export function CursorSpotlight({
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
 
+    // Throttle mouse move events for better performance
+    const now = Date.now();
+    if (now - (handleMouseMove as any).lastCall < 16) return; // ~60fps
+    (handleMouseMove as any).lastCall = now;
+
     const rect = containerRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
@@ -59,9 +64,9 @@ export function CursorSpotlight({
     >
       <motion.div
         className={cn(
-          'pointer-events-none absolute rounded-full',
-          'bg-radial-gradient from-yellow-400/60 via-orange-500/40 to-red-500/20',
-          'blur-3xl transition-opacity duration-300',
+          'pointer-events-none absolute rounded-full scroll-optimized cursor-spotlight',
+          'bg-radial-gradient from-yellow-400/30 via-orange-500/20 to-red-500/10',
+          'blur-xl transition-opacity duration-200 blur-on-scroll',
           isHovered ? 'opacity-100' : 'opacity-0',
           className
         )}
@@ -72,6 +77,8 @@ export function CursorSpotlight({
           y: springY,
           translateX: -size / 2,
           translateY: -size / 2,
+          willChange: isHovered ? 'transform, opacity' : 'auto',
+          contain: 'layout style paint',
         }}
       />
     </div>

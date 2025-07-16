@@ -75,6 +75,13 @@ export default function RootLayout({
           strategy="afterInteractive"
           src="/scripts/performance-monitor.js"
         />
+
+        {/* Scroll optimization script */}
+        <Script
+          id="scroll-optimizer"
+          strategy="afterInteractive"
+          src="/scripts/scroll-optimizer.js"
+        />
       </body>
     </html>
   );

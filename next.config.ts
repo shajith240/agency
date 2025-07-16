@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   // Performance optimizations
   experimental: {
-    optimizePackageImports: ['framer-motion', '@splinetool/react-spline', 'lucide-react'],
+    optimizePackageImports: ['framer-motion', 'motion', '@splinetool/react-spline', 'lucide-react'],
   },
 
   // Image optimization
@@ -34,7 +34,7 @@ const nextConfig: NextConfig = {
               chunks: 'all',
             },
             animations: {
-              test: /[\\/]node_modules[\\/](framer-motion|@splinetool)[\\/]/,
+              test: /[\\/]node_modules[\\/](framer-motion|motion|@splinetool)[\\/]/,
               name: 'animations',
               chunks: 'all',
               priority: 10,

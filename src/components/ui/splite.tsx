@@ -79,10 +79,11 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
   return (
     <div
       ref={containerRef}
-      className={`w-full h-full ${className || ''}`}
+      className={`w-full h-full scroll-optimized ${className || ''}`}
       style={{
         transform: 'translateZ(0)',
         backfaceVisibility: 'hidden',
+        contain: 'layout style paint',
       }}
     >
       {shouldLoad ? (
@@ -103,6 +104,17 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
               className="w-full h-full"
               style={{
                 transform: 'translateZ(0)',
+                backfaceVisibility: 'hidden',
+                willChange: 'auto',
+              }}
+              onLoad={() => {
+                // Optimize Spline scene for better performance
+                const canvas = document.querySelector('canvas');
+                if (canvas) {
+                  canvas.style.imageRendering = 'optimizeSpeed';
+                  canvas.style.transform = 'translateZ(0)';
+                  canvas.style.backfaceVisibility = 'hidden';
+                }
               }}
             />
           </Suspense>

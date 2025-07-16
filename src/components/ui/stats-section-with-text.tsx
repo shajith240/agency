@@ -65,11 +65,7 @@ const StatCard = ({ icon, value, change, label }: StatCardProps) => {
 
 function Stats() {
   return (
-    <section className="pt-8 md:pt-16 pb-16 md:pb-32 bg-black/[0.96] relative w-full overflow-hidden">
-      {/* Enhanced ambient lighting for stats section following design system */}
-      <div className="absolute inset-0 stats-ambient-lighting opacity-60" />
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-yellow-400/5 via-orange-500/4 to-transparent rounded-full blur-3xl" />
-      <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-gradient-to-tl from-red-500/4 via-orange-500/3 to-transparent rounded-full blur-3xl" />
+    <section className="py-16 md:py-24 relative w-full">
 
       <div className="container mx-auto space-y-12 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">

@@ -1,15 +1,15 @@
 "use client";
 
-import { Bot, Workflow, Database, Mail, Target, Users } from "lucide-react";
+import { Bot, Mail, Target } from "lucide-react";
 import { GlowingEffect } from "@/components/ui/glowing-effect";
 import { cn } from "@/lib/utils";
 
-// Service data for the agency - Optimized for readability
+// Service data for the agency - Focused on core offerings
 const services = [
   {
     id: 1,
     icon: Bot,
-    title: "AI Chatbot Development",
+    title: "Chatbot Development",
     description: "Intelligent chatbots that handle customer support and lead generation automatically.",
     benefits: ["24/7 Customer Support", "Lead Qualification", "Natural Conversations"],
     category: "Customer Service",
@@ -17,73 +17,37 @@ const services = [
   },
   {
     id: 2,
-    icon: Workflow,
-    title: "Workflow Automation",
-    description: "Connect your tools and automate repetitive business processes seamlessly.",
-    benefits: ["Process Integration", "Task Automation", "System Connectivity"],
-    category: "Process Optimization",
-    featured: true
-  },
-  {
-    id: 3,
     icon: Mail,
-    title: "Email Marketing Automation",
-    description: "Personalized email campaigns with intelligent segmentation and follow-ups.",
+    title: "Email Marketing",
+    description: "Personalized email campaigns with intelligent segmentation and automated follow-ups.",
     benefits: ["Smart Segmentation", "Automated Sequences", "Performance Tracking"],
     category: "Marketing",
     featured: true
   },
   {
-    id: 4,
-    icon: Database,
-    title: "Data Processing & Analytics",
-    description: "Transform raw data into actionable insights with automated reporting.",
-    benefits: ["Real-time Dashboards", "Automated Reports", "Data Visualization"],
-    category: "Data & Analytics",
-    featured: true
-  },
-  {
-    id: 5,
+    id: 3,
     icon: Target,
     title: "Lead Generation Systems",
-    description: "Capture, qualify, and nurture prospects into paying customers.",
+    description: "Capture, qualify, and nurture prospects into paying customers automatically.",
     benefits: ["Lead Capture", "Qualification Scoring", "Nurture Campaigns"],
     category: "Sales",
-    featured: true
-  },
-  {
-    id: 6,
-    icon: Users,
-    title: "CRM Integration & Automation",
-    description: "Streamline customer management with automated CRM workflows.",
-    benefits: ["Contact Management", "Pipeline Tracking", "Follow-up Automation"],
-    category: "Customer Management",
     featured: true
   }
 ];
 
 export function ServicesSection() {
   const getGridArea = (index: number): string => {
+    // Optimized grid layout for 3 cards - mobile-first responsive design
     const areas = [
-      "md:[grid-area:1/1/2/7] xl:[grid-area:1/1/2/5]",
-      "md:[grid-area:1/7/2/13] xl:[grid-area:2/1/3/5]",
-      "md:[grid-area:2/1/3/7] xl:[grid-area:1/5/2/9]",
-      "md:[grid-area:2/7/3/13] xl:[grid-area:1/9/2/13]",
-      "md:[grid-area:3/1/4/7] xl:[grid-area:2/5/3/9]",
-      "md:[grid-area:3/7/4/13] xl:[grid-area:2/9/3/13]",
+      "sm:[grid-area:1/1/2/7] md:[grid-area:1/1/2/7] xl:[grid-area:1/1/2/5]",   // Chatbot Development
+      "sm:[grid-area:1/7/2/13] md:[grid-area:1/7/2/13] xl:[grid-area:1/5/2/9]",  // Email Marketing
+      "sm:[grid-area:2/4/3/10] md:[grid-area:2/4/3/10] xl:[grid-area:1/9/2/13]", // Lead Generation (centered)
     ];
     return areas[index] || "";
   };
 
   return (
-    <section id="services" className="pt-16 md:pt-24 lg:pt-32 pb-16 md:pb-32 bg-black/[0.96] relative w-full overflow-hidden">
-      {/* Seamless background transition from hero */}
-      <div className="absolute top-0 left-0 w-full h-24 md:h-32 lg:h-40 bg-gradient-to-b from-black/[0.96] to-transparent" />
-
-      {/* Enhanced ambient background for services */}
-      <div className="absolute inset-0 ambient-gradient-overlay-center opacity-60" />
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-br from-yellow-400/5 via-orange-500/4 to-transparent rounded-full blur-3xl" />
-      <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-gradient-to-tl from-red-500/4 via-orange-500/3 to-transparent rounded-full blur-3xl" />
+    <section id="services" className="py-16 md:py-24 relative w-full">
 
       <div className="container mx-auto space-y-16 relative z-10 px-4 sm:px-6 lg:px-8">
         {/* Section Header - Enhanced spacing for better visual separation */}
@@ -98,7 +62,7 @@ export function ServicesSection() {
 
         {/* Services Grid - Enhanced spacing and layout */}
         <div className="relative z-10">
-          <ul className="grid grid-cols-1 grid-rows-none gap-6 md:grid-cols-12 md:grid-rows-3 lg:gap-8 xl:max-h-[40rem] xl:grid-rows-2">
+          <ul className="grid grid-cols-1 grid-rows-none gap-4 sm:gap-6 sm:grid-cols-12 sm:grid-rows-2 lg:gap-8 xl:max-h-[30rem] xl:grid-rows-1">
             {services.map((service, index) => {
               const IconComponent = service.icon;
               return (
