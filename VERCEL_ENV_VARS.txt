@@ -1,0 +1,68 @@
+# COPY-PASTE THESE EXACT VALUES INTO VERCEL ENVIRONMENT VARIABLES
+# Go to: Vercel Dashboard > Your Project > Settings > Environment Variables
+
+# ============================================================================
+# REQUIRED ENVIRONMENT VARIABLES - ADD THESE TO VERCEL
+# ============================================================================
+
+Variable Name: NEXT_PUBLIC_SUPABASE_URL
+Value: https://ltmwapridldsxphvduer.supabase.co
+Environment: Production, Preview, Development
+
+Variable Name: NEXT_PUBLIC_SUPABASE_ANON_KEY  
+Value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx0bXdhcHJpZGxkc3hwaHZkdWVyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgxOTc0OTIsImV4cCI6MjA2Mzc3MzQ5Mn0.XTphrhHIOBKBJvrbBEuKEKMOMxKwk9z1F6zgZj6uThs
+Environment: Production, Preview, Development
+
+Variable Name: SUPABASE_SERVICE_ROLE_KEY
+Value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx0bXdhcHJpZGxkc3hwaHZkdWVyIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0ODE5NzQ5MiwiZXhwIjoyMDYzNzczNDkyfQ.q5rJfKpwgctiAGEwfltXbhuoJ6r-9UKSu7-xUTdZvZg
+Environment: Production, Preview, Development
+
+Variable Name: NEXT_PUBLIC_APP_URL
+Value: https://YOUR-PROJECT-NAME.vercel.app
+Environment: Production, Preview, Development
+NOTE: Replace YOUR-PROJECT-NAME with your actual Vercel project name
+
+Variable Name: CSRF_SECRET
+Value: j53znf5u8j53znf5u8j53znf5u8j53znf5u8
+Environment: Production, Preview, Development
+
+Variable Name: RATE_LIMIT_SECRET
+Value: j53znf5u8j53znf5u8j53znf5u8j53znf5u8
+Environment: Production, Preview, Development
+
+Variable Name: NODE_ENV
+Value: production
+Environment: Production only
+
+# ============================================================================
+# STEP-BY-STEP INSTRUCTIONS
+# ============================================================================
+
+1. Go to https://vercel.com/dashboard
+2. Click on your Sharp Flow agency project
+3. Go to Settings tab
+4. Click on "Environment Variables" in the left sidebar
+5. For each variable above:
+   - Click "Add New"
+   - Enter the Variable Name exactly as shown
+   - Enter the Value exactly as shown
+   - Select the Environment checkboxes as specified
+   - Click "Save"
+
+6. After adding all variables:
+   - Go to "Deployments" tab
+   - Find the latest failed deployment
+   - Click the three dots menu
+   - Click "Redeploy"
+
+7. Your deployment should now succeed!
+
+# ============================================================================
+# IMPORTANT NOTES
+# ============================================================================
+
+- Make sure to replace YOUR-PROJECT-NAME in NEXT_PUBLIC_APP_URL with your actual Vercel project name
+- Copy the values exactly as shown (no extra spaces or characters)
+- The anon key and service role key are long JWT tokens - copy them completely
+- All variables are case-sensitive
+- Select the correct environments for each variable as specified above
