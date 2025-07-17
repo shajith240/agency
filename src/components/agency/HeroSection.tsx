@@ -50,18 +50,18 @@ export function HeroSection() {
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-6 sm:mb-8">
               <Button
                 size="lg"
-                className="text-white hover:text-white font-semibold text-base sm:text-lg md:text-xl px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5 min-h-[44px] transition-all duration-300 ease-out rounded-xl bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 hover:from-yellow-300 hover:via-orange-400 hover:to-red-400 shadow-lg hover:shadow-xl hover:shadow-orange-500/25 border border-white/10 hover:border-white/20 hover:scale-[1.02] active:scale-[0.98]"
+                className="group text-white hover:text-white font-semibold text-base sm:text-lg md:text-xl px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5 min-h-[44px] transition-all duration-300 ease-out rounded-xl bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 hover:from-yellow-300 hover:via-orange-400 hover:to-red-400 shadow-lg hover:shadow-xl hover:shadow-orange-500/25 border border-white/10 hover:border-white/20 hover:scale-[1.02] active:scale-[0.98] apple-button-primary"
                 asChild
               >
                 <Link href="#contact">
                   Get Free Consultation
-                  <ArrowRight className="ml-2 sm:ml-3 w-4 h-4 sm:w-5 sm:h-5" />
+                  <ArrowRight className="ml-2 sm:ml-3 w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-x-1" />
                 </Link>
               </Button>
               <Button
                 size="lg"
                 variant="ghost"
-                className="text-white hover:text-white font-medium text-base sm:text-lg md:text-xl px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5 min-h-[44px] transition-all duration-300 border border-white/30 hover:border-primary/60 backdrop-blur-sm bg-gradient-to-r from-white/5 to-white/10 hover:from-primary/20 hover:to-primary/30 shadow-sm hover:shadow-md"
+                className="group text-white hover:text-white font-medium text-base sm:text-lg md:text-xl px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5 min-h-[44px] transition-all duration-300 ease-out rounded-xl border border-white/20 hover:border-white/40 backdrop-blur-sm bg-white/5 hover:bg-white/10 shadow-lg hover:shadow-xl hover:shadow-white/10 hover:scale-[1.02] active:scale-[0.98] apple-button-secondary"
                 asChild
               >
                 <Link href="#services">

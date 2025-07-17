@@ -623,6 +623,101 @@ body.scrolling .footer-link-optimized {
   }
 }
 
+/* Apple-inspired design system */
+
+/* Apple-style button components */
+.apple-button-primary {
+  /* Enhanced depth and refinement */
+  box-shadow:
+    0 4px 14px 0 rgba(0, 0, 0, 0.15),
+    0 2px 4px 0 rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+
+  /* Subtle border enhancement */
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  /* Apple-style backdrop blur */
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+.apple-button-primary:hover {
+  box-shadow:
+    0 8px 25px 0 rgba(249, 115, 22, 0.25),
+    0 4px 10px 0 rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+
+  border-color: rgba(255, 255, 255, 0.25);
+
+  /* Subtle glow effect */
+  filter: brightness(1.05);
+}
+
+.apple-button-secondary {
+  /* Glass morphism effect */
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+
+  /* Refined shadows */
+  box-shadow:
+    0 4px 14px 0 rgba(0, 0, 0, 0.1),
+    0 2px 4px 0 rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+  /* Subtle border */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.apple-button-secondary:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.2);
+
+  box-shadow:
+    0 8px 25px 0 rgba(255, 255, 255, 0.1),
+    0 4px 10px 0 rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Apple-style focus states */
+.apple-button-primary:focus-visible,
+.apple-button-secondary:focus-visible {
+  outline: 2px solid rgba(251, 191, 36, 0.5);
+  outline-offset: 2px;
+}
+
+/* Apple-style micro-interactions */
+.apple-button-primary:active,
+.apple-button-secondary:active {
+  transform: scale(0.98);
+  transition-duration: 0.1s;
+}
+
+/* Enhanced typography for Apple aesthetic */
+.apple-text-refined {
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+}
+
+/* Apple-style card components */
+.apple-card {
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 4px 14px 0 rgba(0, 0, 0, 0.1),
+    0 2px 4px 0 rgba(0, 0, 0, 0.05);
+}
+
+.apple-card:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 8px 25px 0 rgba(0, 0, 0, 0.15),
+    0 4px 10px 0 rgba(0, 0, 0, 0.1);
+}
+
 /* Hero section specific overflow handling for significantly expanded robot animation */
 .hero-section-container {
   overflow-x: hidden;

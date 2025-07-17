@@ -47,11 +47,11 @@ function Header1() {
                             </Link>
                         ))}
                     </nav>
-                    {/* Desktop CTA Buttons */}
+                    {/* Desktop CTA Buttons - Apple-inspired design */}
                     <div className="hidden md:flex items-center space-x-4">
                         <Button
                             variant="ghost"
-                            className="text-gray-300 hover:text-white hover:bg-white/10 transition-colors duration-200"
+                            className="group text-gray-300 hover:text-white transition-all duration-300 ease-out rounded-xl border border-white/10 hover:border-white/20 backdrop-blur-sm bg-white/5 hover:bg-white/10 shadow-sm hover:shadow-lg hover:shadow-white/10 hover:scale-[1.02] active:scale-[0.98] apple-button-secondary"
                             asChild
                         >
                             <Link href="mailto:contact@sharpflow.ai">
@@ -59,7 +59,7 @@ function Header1() {
                             </Link>
                         </Button>
                         <Button
-                            className="bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 hover:from-yellow-300 hover:via-orange-400 hover:to-red-400 text-white font-medium transition-all duration-200"
+                            className="group bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 hover:from-yellow-300 hover:via-orange-400 hover:to-red-400 text-white font-medium transition-all duration-300 ease-out rounded-xl shadow-lg hover:shadow-xl hover:shadow-orange-500/25 border border-white/10 hover:border-white/20 hover:scale-[1.02] active:scale-[0.98] apple-button-primary"
                             asChild
                         >
                             <Link href="#contact">Get Started</Link>
@@ -97,13 +97,13 @@ function Header1() {
                                 <Link href="mailto:contact@sharpflow.ai" onClick={() => setOpen(false)}>
                                     <Button
                                         variant="ghost"
-                                        className="w-full justify-start text-gray-300 hover:text-white hover:bg-white/10 min-h-[44px] text-base font-medium"
+                                        className="w-full justify-start text-gray-300 hover:text-white min-h-[44px] text-base font-medium transition-all duration-300 ease-out rounded-xl border border-white/10 hover:border-white/20 backdrop-blur-sm bg-white/5 hover:bg-white/10 shadow-sm hover:shadow-lg hover:shadow-white/10 apple-button-secondary"
                                     >
                                         Contact Us
                                     </Button>
                                 </Link>
                                 <Link href="#contact" onClick={() => setOpen(false)}>
-                                    <Button className="w-full bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 hover:from-yellow-300 hover:via-orange-400 hover:to-red-400 text-white font-medium min-h-[44px] text-base">
+                                    <Button className="w-full bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 hover:from-yellow-300 hover:via-orange-400 hover:to-red-400 text-white font-medium min-h-[44px] text-base transition-all duration-300 ease-out rounded-xl shadow-lg hover:shadow-xl hover:shadow-orange-500/25 border border-white/10 hover:border-white/20 apple-button-primary">
                                         Get Started
                                     </Button>
                                 </Link>

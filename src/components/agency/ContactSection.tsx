@@ -226,33 +226,33 @@ export function ContactSection() {
   return (
     <section id="contact" className="py-16 md:py-24 relative w-full">
 
-      <div className="container mx-auto space-y-12 relative z-10">
-        {/* Centered Content Layout */}
-        <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
-          {/* Headline */}
-          <div className="mb-8">
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 leading-tight">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Centered Content Layout with Apple-inspired spacing */}
+        <div className="flex flex-col items-center text-center max-w-4xl mx-auto space-y-8 md:space-y-12">
+          {/* Headline - Consistent with other sections */}
+          <div className="space-y-4">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 leading-tight apple-text-refined">
               Ready to Transform Your Business?
             </h2>
           </div>
 
-          {/* Description */}
-          <div className="mb-12">
-            <p className="text-lg md:text-xl text-neutral-300 leading-relaxed max-w-3xl">
+          {/* Description with enhanced typography */}
+          <div className="space-y-6">
+            <p className="text-lg md:text-xl text-neutral-300 leading-relaxed max-w-3xl apple-text-refined">
               Get a free consultation to discover how AI automation can streamline your operations,
               reduce costs, and boost productivity. Our experts will design a custom solution for your business.
             </p>
           </div>
 
-          {/* Action Buttons - Mobile optimized spacing and touch targets */}
+          {/* Action Buttons - Apple-inspired design with refined interactions */}
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 lg:gap-8">
             <Button
               size="lg"
-              className="text-white hover:text-white font-semibold text-base sm:text-lg md:text-xl px-6 sm:px-8 md:px-12 py-3 sm:py-4 md:py-6 min-h-[44px] transition-colors duration-200 border-2 border-orange-500/70 hover:border-orange-500 bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 hover:from-yellow-300 hover:via-orange-400 hover:to-red-400 shadow-md hover:shadow-lg contact-button-optimized"
+              className="group text-white hover:text-white font-semibold text-base sm:text-lg md:text-xl px-6 sm:px-8 md:px-12 py-3 sm:py-4 md:py-6 min-h-[44px] transition-all duration-300 ease-out rounded-xl bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 hover:from-yellow-300 hover:via-orange-400 hover:to-red-400 shadow-lg hover:shadow-xl hover:shadow-orange-500/25 border border-white/10 hover:border-white/20 hover:scale-[1.02] active:scale-[0.98] apple-button-primary"
               asChild
             >
               <Link href="https://calendly.com/sharpflow" target="_blank">
-                <Calendar className="mr-2 sm:mr-3 w-4 h-4 sm:w-5 sm:h-5" />
+                <Calendar className="mr-2 sm:mr-3 w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:scale-110" />
                 Book Free Call
               </Link>
             </Button>
@@ -261,18 +261,18 @@ export function ContactSection() {
               <DialogTrigger asChild>
                 <Button
                   size="lg"
-                  className="text-white hover:text-white font-semibold text-base sm:text-lg md:text-xl px-6 sm:px-8 md:px-12 py-3 sm:py-4 md:py-6 min-h-[44px] transition-colors duration-200 border-2 border-white/30 hover:border-orange-500/60 bg-gradient-to-r from-white/5 to-white/10 hover:from-orange-500/20 hover:to-red-500/30 shadow-sm hover:shadow-md contact-button-optimized"
+                  className="group text-white hover:text-white font-semibold text-base sm:text-lg md:text-xl px-6 sm:px-8 md:px-12 py-3 sm:py-4 md:py-6 min-h-[44px] transition-all duration-300 ease-out rounded-xl border border-white/20 hover:border-white/40 backdrop-blur-sm bg-white/5 hover:bg-white/10 shadow-lg hover:shadow-xl hover:shadow-white/10 hover:scale-[1.02] active:scale-[0.98] apple-button-secondary"
                 >
-                  <MessageSquare className="mr-2 sm:mr-3 w-4 h-4 sm:w-5 sm:h-5" />
+                  <MessageSquare className="mr-2 sm:mr-3 w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:scale-110" />
                   Get Started
                 </Button>
               </DialogTrigger>
 
-              {/* Modal Content - Mobile optimized Contact Form */}
-              <DialogContent className="bg-black/95 border border-neutral-800/50 backdrop-blur-sm max-w-2xl max-h-[90vh] overflow-y-auto mx-4 sm:mx-auto">
-                <DialogHeader>
-                  <DialogTitle className="text-xl sm:text-2xl font-semibold text-white mb-2">Get Your Custom Quote</DialogTitle>
-                  <p className="text-sm sm:text-base text-neutral-400">Tell us about your business and automation needs</p>
+              {/* Modal Content - Apple-inspired Contact Form */}
+              <DialogContent className="apple-card max-w-2xl max-h-[90vh] overflow-y-auto mx-4 sm:mx-auto rounded-2xl">
+                <DialogHeader className="space-y-3">
+                  <DialogTitle className="text-xl sm:text-2xl font-semibold text-white apple-text-refined">Get Your Custom Quote</DialogTitle>
+                  <p className="text-sm sm:text-base text-neutral-400 apple-text-refined">Tell us about your business and automation needs</p>
                 </DialogHeader>
 
                 <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6 mt-4 sm:mt-6">
@@ -399,7 +399,7 @@ export function ContactSection() {
                   <Button
                     type="submit"
                     disabled={isSubmitting || rateLimited}
-                    className="w-full text-white hover:text-white font-semibold text-lg py-6 transition-all duration-300 bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 hover:from-yellow-300 hover:via-orange-400 hover:to-red-400 shadow-lg hover:shadow-xl hover:shadow-orange-500/25 border border-white/10 hover:border-white/20 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                    className="group w-full text-white hover:text-white font-semibold text-lg py-6 transition-all duration-300 ease-out rounded-xl bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 hover:from-yellow-300 hover:via-orange-400 hover:to-red-400 shadow-lg hover:shadow-xl hover:shadow-orange-500/25 border border-white/10 hover:border-white/20 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 apple-button-primary"
                   >
                     {isSubmitting ? (
                       <>
@@ -408,7 +408,7 @@ export function ContactSection() {
                       </>
                     ) : (
                       <>
-                        <Send className="mr-3 w-5 h-5" />
+                        <Send className="mr-3 w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
                         Get Free Consultation
                       </>
                     )}
@@ -420,11 +420,11 @@ export function ContactSection() {
             <Button
               size="lg"
               variant="ghost"
-              className="text-white hover:text-white font-semibold text-base sm:text-lg md:text-xl px-6 sm:px-8 md:px-12 py-3 sm:py-4 md:py-6 min-h-[44px] transition-colors duration-200 border-2 border-white/30 hover:border-orange-500/60 bg-gradient-to-r from-white/5 to-white/10 hover:from-orange-500/20 hover:to-red-500/30 shadow-sm hover:shadow-md contact-button-optimized"
+              className="group text-white hover:text-white font-semibold text-base sm:text-lg md:text-xl px-6 sm:px-8 md:px-12 py-3 sm:py-4 md:py-6 min-h-[44px] transition-all duration-300 ease-out rounded-xl border border-white/20 hover:border-white/40 backdrop-blur-sm bg-white/5 hover:bg-white/10 shadow-lg hover:shadow-xl hover:shadow-white/10 hover:scale-[1.02] active:scale-[0.98] apple-button-secondary"
               asChild
             >
               <Link href="mailto:contact@sharpflow.ai">
-                <Mail className="mr-3 w-5 h-5" />
+                <Mail className="mr-2 sm:mr-3 w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:scale-110" />
                 Send Email
               </Link>
             </Button>
